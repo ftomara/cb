@@ -266,25 +266,30 @@ class _PaintscreenState extends State<Paintscreen> {
               key: _repaintBoundaryKey,
               child: Stack(
                 children: [
-                  widget.impath != null
-                      ? Image.asset(
-                          widget.impath!,
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                          height: double.infinity,
-                        )
-                      : widget.history != null
-                          ? Image.memory(
-                              widget.history!,
-                              fit: BoxFit.fill,
-                              width: double.infinity,
-                              height: double.infinity,
-                            )
-                          : Container(
-                              color: Colors.white,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
+                  Transform(
+                    transform: Matrix4.identity()
+                      ..translate(_offset.dx, _offset.dy)
+                      ..scale(_sacle),
+                    child: widget.impath != null
+                        ? Image.asset(
+                            widget.impath!,
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: double.infinity,
+                          )
+                        : widget.history != null
+                            ? Image.memory(
+                                widget.history!,
+                                fit: BoxFit.fill,
+                                width: double.infinity,
+                                height: double.infinity,
+                              )
+                            : Container(
+                                color: Colors.white,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                  ),
                   CustomPaint(
                     painter: PaintCanvas(
                       sketches: state.undoList + [sketch],
